@@ -12,11 +12,14 @@ import {
  } from './styles'; 
 import { Card } from '../../components/Card';
 import { UserInfo } from '../../components/UserInfo';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/auth';
 
 
 const Feed = () => {
+    const {user} = useContext(AuthContext)
     return (<>
-        <Header autenticado={true}></Header>
+        <Header></Header>
         <Container>
             <Column flex={3}>
                 <Title>Feed</Title>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import logo from '../../assets/logo.png'
 import {
     BuscarInputContainer,
@@ -12,28 +12,42 @@ import {
     Wrapper
 } from './styles'
 import { Button } from '../Button'
-import { IHeader } from './types'
+import { AuthContext } from '../../context/auth'
+import { Link } from 'react-router-dom'
+import { useAuth } from '../../hooks/useAuth'
 
-const Header= ({autenticado}: IHeader) => {
+
+const Header = () => {
+    const {user, handleLogout} = useAuth()
   return (
       <Wrapper>
           <Container>
               <Row>
-                  <img src={logo} alt='Logo da dio'></img>
-                  {autenticado ? (<>
-                      <BuscarInputContainer>
+                  <Link to="/">
                       
-                      <Input placeholder='Buscar... '></Input>                     </BuscarInputContainer>
-                     <Menu>Live Code</Menu>
-                      <Menu>Global</Menu>
-                  </>) : null}               
+                    <img src={logo} alt='Logo da dio'></img>
+                      
+                  </Link>
+                  {user.id ? (<>
+                        <BuscarInputContainer>
+                        
+                        <Input placeholder='Buscar... '></Input>                     </BuscarInputContainer>
+                        <Menu>Live Code</Menu>
+                        <Menu>Global</Menu>
+                    </>) : null}    
+                           
                   
               </Row>
               <Row>
                   
-                  {autenticado ? (
-                      <UserPicture src='https://avatars.githubusercontent.com/u/146994872?v=4'></UserPicture>
-                    ) : (
+                  {user.id ? (<>
+                  
+                    <UserPicture src='https://avatars.githubusercontent.com/u/146994872?v=4'></UserPicture>
+                    <a href='#' onClick={handleLogout}>Sair</a>
+                  </>
+                      
+                  
+                  ) : (
                         <>
                         <MenuRight href='#'>Home</MenuRight>                  
                         <Button title="Entrar"></Button>
